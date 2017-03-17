@@ -1,3 +1,6 @@
+import * as actionType from "../constants/gameActionType"; 
+import { generateMap } from "../utils/mapGeneration";
+
 const defaultGameState = {
 	map: [],
 	dungeon: 0,
@@ -14,7 +17,16 @@ const defaultGameState = {
 };
 
 const gameReducer = (state = defaultGameState, action) => {
-	return state;
+	switch(action.type) {
+		case actionType.GENERATE: {
+			return {
+				...state,
+				map: generateMap(action.width, action.height)
+			}
+		}
+		default:
+			return state;
+	}
 }
 
 export default gameReducer;

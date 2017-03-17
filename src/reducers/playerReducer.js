@@ -19,9 +19,11 @@ const playerReducer = (state = defaultPlayerState, action) => {
 			};
 		}
 		case actionType.ADD_XP: {
+			const newXp = state.xp + action.xp;
 			return {
 				...state,
-				xp: state.xp + action.xp
+				xp: newXp,
+				lvl: Math.floor(newXp/10)
 			};
 		}
 		case actionType.SWITCH_WEAPON: {
