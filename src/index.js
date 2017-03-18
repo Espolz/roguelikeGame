@@ -5,14 +5,14 @@ import store from './store';
 
 store.subscribe(() => {
 	console.log("store updated", store.getState());
-	// const map = store.getState().game.map;
-	// for (let i = 0; i < 25; i++) {
-	// 	let row = '';
-	// 	for (let j = 0; j < 25; j++) {
-	// 		row += map[i][j] + ' ';
-	// 	}
-	// 	console.log(row);
-	// }
+	const map = store.getState().game.map;
+	for (let i = 0; i < map.length; i++) {
+		let row = '';
+		for (let j = 0; j < map[i].length; j++) {
+			row += map[i][j] + ' ';
+		}
+		console.log(row);
+	}
 });
 
 // store.dispatch({
@@ -25,11 +25,17 @@ store.subscribe(() => {
 // 	weapon: 'gun'
 // });
 
-// store.dispatch({
-// 	type: 'GENERATE',
-// 	width: 50,
-// 	height: 50
-// });
+store.dispatch({
+	type: 'GENERATE',
+	width: 30,
+	height: 15
+});
+
+
+store.dispatch({
+	type: 'MOVE_PLAYER',
+	direction: 'right'
+});
 
 
 

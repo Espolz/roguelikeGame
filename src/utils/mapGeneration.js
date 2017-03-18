@@ -53,14 +53,17 @@ export function generateMap(width, height) {
 
 	}
 
+	// add the player at the center 
+	map[Math.floor(height/2)][Math.floor(width/2)] = 'player';
+
 	//add the walls
 	for (let yy = 1; yy < height-1; yy++) {
 		for (let xx = 1; xx < width-1; xx++) {
 			if (map[yy][xx] === 'floor') {
-				if (map[yy][xx+1] !== 'floor') map[yy][xx+1] = 'wall';
-				if (map[yy][xx-1] !== 'floor') map[yy][xx-1] = 'wall';
-				if (map[yy+1][xx] !== 'floor') map[yy+1][xx] = 'wall';
-				if (map[yy-1][xx] !== 'floor') map[yy-1][xx] = 'wall';
+				if (map[yy][xx+1] !== 'floor' && map[yy][xx+1] !== 'player') map[yy][xx+1] = 'wall';
+				if (map[yy][xx-1] !== 'floor' && map[yy][xx-1] !== 'player') map[yy][xx-1] = 'wall';
+				if (map[yy+1][xx] !== 'floor' && map[yy+1][xx] !== 'player') map[yy+1][xx] = 'wall';
+				if (map[yy-1][xx] !== 'floor' && map[yy-1][xx] !== 'player') map[yy-1][xx] = 'wall';
 			}
 		}
 	}

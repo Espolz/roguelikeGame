@@ -1,5 +1,7 @@
 import * as actionType from "../constants/gameActionType"; 
 import { generateMap } from "../utils/mapGeneration";
+import { movePlayer } from "../utils/playerMovements";
+
 
 const defaultGameState = {
 	map: [],
@@ -22,6 +24,14 @@ const gameReducer = (state = defaultGameState, action) => {
 			return {
 				...state,
 				map: generateMap(action.width, action.height)
+			}
+		}
+		case actionType.MOVE_PLAYER: {
+			let oldMap = [...state.map];
+			let newMap = movePlayer(oldMap, action.direction);
+			return {
+				...state,
+				map: newMap
 			}
 		}
 		default:
