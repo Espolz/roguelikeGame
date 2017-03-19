@@ -52,7 +52,6 @@ export function movePlayer(map, direction) {
 	const playerPosition = findPlayerPosition(map);
 
 	if (playerPosition.every((tile) => tile != -1)) {
-		console.log(playerPosition);
 		const newPosition = getNewPosition(map, playerPosition, direction);
 		const tileMeeting = placeMeeting(map, newPosition);
 		
