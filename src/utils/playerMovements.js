@@ -1,4 +1,6 @@
 import { clamp } from './utils';
+import weaponsDmg from '../constants/weaponsDmg';
+
 
 function transformDirToVect(direction) {
 	switch(direction) {
@@ -39,7 +41,7 @@ function placeMeeting(map, position) {
 function findPlayerPosition(map) {
 	for (let i = 0; i < map.length; i++) {
 		for (let j = 0; j < map[0].length; j++) {
-			if (map[i][j] === 'player') {
+			if (map[i][j].tile === 'player') {
 				return [j, i];
 			}
 		}
@@ -48,18 +50,78 @@ function findPlayerPosition(map) {
 	return [-1, -1];
 }
 
-export function movePlayer(map, direction) {
+export function movePlayer(direction, state) {
+	let newState = { ...state };
+	let map = newState.map.map(e => e.map(o => Object.assign({}, o)));
 	const playerPosition = findPlayerPosition(map);
 
-	if (playerPosition.every((tile) => tile != -1)) {
+	if (playerPosition.every(x => x != -1)) {
 		const newPosition = getNewPosition(map, playerPosition, direction);
-		const tileMeeting = placeMeeting(map, newPosition);
+		let oMeeting = placeMeeting(map, newPosition);
 		
-		if (tileMeeting === 'floor') {
-			map[playerPosition[1]][playerPosition[0]] = 'floor';
-			map[newPosition[1]][newPosition[0]] = 'player';
+		if (oMeeting.tile === 'floor') {
+
+			map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
+			map[newPosition[1]][newPosition[0]] = {tile: 'player'};
+
+		} else if (oMeeting.tile === 'enemy') {
+
+			//fighting
+			oMeeting.hp = oMeeting.hp - state.player.dmg;
+			newState = {
+				...newState,
+				player: {
+					...newState.player,
+					hp: newState.player.hp - oMeeting.dmg 
+				}
+			}
+
+			//check if enemy/boss is dying
+			if (oMeeting.hp <= 0) {
+				map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
+				map[newPosition[1]][newPosition[0]] = {tile: 'player'};
+			}
+
+			// check if player is dying
+			if (newState.player.hp <= 0) {
+				map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
+
+				//restart
+				newState = {
+					...newState,
+					game_status: 'starting'
+				}
+			}
+		} else if (oMeeting.tile === 'health') {
+
+			map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
+			map[newPosition[1]][newPosition[0]] = {tile: 'player'};
+
+			newState = {
+				...newState,
+				player: {
+					...newState.player,
+					hp: newState.player.hp + oMeeting.hp
+				}
+			}
+		} else if (oMeeting.tile === 'weapon') {
+
+			map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
+			map[newPosition[1]][newPosition[0]] = {tile: 'player'};
+
+			newState = {
+				...newState,
+				player: {
+					...newState.player,
+					weapon: oMeeting.weapon,
+					dmg: newState.player.dmg - weaponsDmg[newState.player.weapon] + weaponsDmg[oMeeting.weapon]
+				}
+			}
 		}
 	}
 
-	return map;
+	return {
+		...newState,
+		map
+	};
 }
