@@ -58,13 +58,13 @@ export function movePlayer(direction, state) {
 	if (playerPosition.every(x => x != -1)) {
 		const newPosition = getNewPosition(map, playerPosition, direction);
 		let oMeeting = placeMeeting(map, newPosition);
-		
+	
 		if (oMeeting.tile === 'floor') {
 
 			map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
 			map[newPosition[1]][newPosition[0]] = {tile: 'player'};
 
-		} else if (oMeeting.tile === 'enemy') {
+		} else if (oMeeting.tile === 'enemy' || oMeeting.tile === 'boss') {
 
 			//fighting
 			oMeeting.hp = oMeeting.hp - state.player.dmg;
@@ -116,6 +116,15 @@ export function movePlayer(direction, state) {
 					weapon: oMeeting.weapon,
 					dmg: newState.player.dmg - weaponsDmg[newState.player.weapon] + weaponsDmg[oMeeting.weapon]
 				}
+			}
+		} else if (oMeeting.tile === 'exit') {
+			map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
+			map[newPosition[1]][newPosition[0]] = {tile: 'player'};
+
+			newState = {
+				...newState,
+				dungeon: newState.dungeon + 1,
+				game_status: 'starting'
 			}
 		}
 	}

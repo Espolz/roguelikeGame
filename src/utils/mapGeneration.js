@@ -9,6 +9,7 @@ export function generateMap(width, height, state) {
 	const eOdds = 4; // enemy spawn luck
 	const hpOdds = 4; // health spawn luck
 	let wpIsSpawned = false;
+	let exitIsSpawned = false;
 
 
 	//fill the map with the void
@@ -107,6 +108,11 @@ export function generateMap(width, height, state) {
 						weapon: Object.keys(weaponsDmg)[state.dungeon]
 					};
 					wpIsSpawned = true;
+				} else if (!exitIsSpawned) {
+					map[yy][xx] = {
+						tile: 'exit'
+					};
+					exitIsSpawned = true;
 				}
 			}
 			

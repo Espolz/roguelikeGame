@@ -9,7 +9,7 @@ const gameReducer = (state = defaultGameState, action) => {
 	switch(action.type) {
 		case actionType.GENERATE: {
 			return {
-				...defaultGameState,
+				...state,
 				game_status: 'playing',
 				map: generateMap(action.width, action.height, state)
 			};
