@@ -10,7 +10,7 @@ export const generate = (width, height) => {
 
 export const movePlayer = (direction) => {
 	return {
-		type: actionType.GENERATE,
+		type: actionType.MOVE_PLAYER,
 		direction
 	};
 }

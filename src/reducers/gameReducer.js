@@ -36,7 +36,7 @@ const gameReducer = (state = defaultGameState, action) => {
 				player: {
 					...state.player,
 					xp: newXp,
-					lvl: Math.floor(newXp/10)
+					lvl: Math.floor(newXp/10),
 				}
 			};
 		}

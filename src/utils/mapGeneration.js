@@ -4,12 +4,16 @@ import weaponsDmg from "../constants/weaponsDmg";
 
 export function generateMap(width, height, state) {
 	let map = [];
+
 	const controllerDirType = ['up', 'right', 'down', 'left'];
 	const cOdds = 1; // controller change direction luck
-	const eOdds = 4; // enemy spawn luck
-	const hpOdds = 4; // health spawn luck
+	const eOdds = 50; // enemy spawn luck
+	const hpOdds = 80; // health spawn luck
+	const bossLvl = 4; // the level where the boss appear
+
 	let wpIsSpawned = false;
 	let exitIsSpawned = false;
+	
 
 
 	//fill the map with the void
@@ -103,15 +107,35 @@ export function generateMap(width, height, state) {
 						hp: 20
 					};
 				} else if (!wpIsSpawned) {
-					map[yy][xx] = {
+
+					do {
+						var rx = randomRange(1, width-2);
+						var ry = randomRange(1, height-2); 
+					} while(map[ry][rx].tile !== 'floor');
+
+					map[ry][rx] = {
 						tile: 'weapon',
 						weapon: Object.keys(weaponsDmg)[state.dungeon]
 					};
+
 					wpIsSpawned = true;
 				} else if (!exitIsSpawned) {
-					map[yy][xx] = {
-						tile: 'exit'
-					};
+					do {
+						var rx = randomRange(1, width-2);
+						var ry = randomRange(1, height-2); 
+					} while(map[ry][rx].tile !== 'floor');
+
+					if (state.dungeon < bossLvl) {
+						map[ry][rx] = {
+							tile: 'exit'
+						};
+					} else {
+						map[ry][rx] = {
+							tile: 'boss',
+							...state.boss
+						};
+					}
+
 					exitIsSpawned = true;
 				}
 			}

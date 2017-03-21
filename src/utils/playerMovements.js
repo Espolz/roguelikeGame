@@ -1,6 +1,6 @@
 import { clamp } from './utils';
 import weaponsDmg from '../constants/weaponsDmg';
-
+import { defaultGameState } from "../constants/defaultState";
 
 function transformDirToVect(direction) {
 	switch(direction) {
@@ -80,15 +80,40 @@ export function movePlayer(direction, state) {
 			if (oMeeting.hp <= 0) {
 				map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
 				map[newPosition[1]][newPosition[0]] = {tile: 'player'};
+				
+				// if player beat the boss restart game
+				if (oMeeting.tile === 'boss') {
+					alert('You win the game !');
+					newState = {
+						...defaultGameState,
+						game_status: 'starting'
+					}
+				} else {
+					//change the player level
+					const newXp = newState.player.xp + 3;
+					const newLvl = Math.floor(newXp/10);
+					newState = {
+						...newState,
+						player: {
+							...newState.player,
+							xp: newXp,
+							lvl: newLvl,
+							dmg: (newState.player.dmg / newState.player.lvl) * newLvl
+						}
+					}
+				}
+
+				
 			}
 
 			// check if player is dying
 			if (newState.player.hp <= 0) {
 				map[playerPosition[1]][playerPosition[0]] = {tile:'floor'};
 
+				alert('You lose, try again !');
 				//restart
 				newState = {
-					...newState,
+					...defaultGameState,
 					game_status: 'starting'
 				}
 			}
@@ -123,6 +148,10 @@ export function movePlayer(direction, state) {
 
 			newState = {
 				...newState,
+				enemy: {
+					hp: newState.enemy.hp*2,
+					dmg: newState.enemy.dmg*1.5,
+				},
 				dungeon: newState.dungeon + 1,
 				game_status: 'starting'
 			}

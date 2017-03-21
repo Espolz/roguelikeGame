@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import $ from "jquery";
+
 
 import Header from "../components/Header";
 import HUD from "../components/HUD";
@@ -7,16 +9,34 @@ import Dungeon from "../components/Dungeon";
 
 
 import { generate, movePlayer } from "../actions/gameActions";
-
+import { WIDTH, HEIGHT } from "../constants/globalConsts";
 
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
+	}
+
+	handleKeyDown(event) {
+		switch(event.which) {
+			case 38:
+				this.props.move('up');
+				break;
+			case 40:
+				this.props.move('down');
+				break;
+			case 37:
+				this.props.move('left');
+				break;
+			case 39:
+				this.props.move('right');
+		}
 	}
 
 	componentWillMount() {
-		this.props.generateMap(5, 5);
+		this.props.generateMap(WIDTH, HEIGHT);
+		$(document).on('keydown', this.handleKeyDown);
 	}
 
 	render() {
@@ -27,6 +47,12 @@ class App extends React.Component {
 				<Dungeon map={this.props.game.map}/>
 			</div>
 		);
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.game.game_status === 'starting') {
+			this.props.generateMap(WIDTH, HEIGHT);
+		}
 	}
 }
 
@@ -42,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
 		generateMap: (width, height) => {
 			dispatch(generate(width, height));
 		},
-		movePlayer: (direction) => {
+		move: (direction) => {
 			dispatch(movePlayer(direction));
 		}
 	}
