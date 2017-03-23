@@ -7,7 +7,7 @@ export const defaultGameState = {
 		dmg: 8,
 	},
 	boss: {
-		hp: 10,
+		hp: 600,
 		dmg: 50
 	},
 	player: {

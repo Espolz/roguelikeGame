@@ -13,3 +13,4 @@ export default class HUD extends React.Component {
 		);
 	}
 }
+

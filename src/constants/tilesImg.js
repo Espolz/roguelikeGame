@@ -1,13 +1,13 @@
 const tileImg = {
-	health: 'http://pe-images.s3.amazonaws.com/basics/cs6/shapes/custom-shape-tool/heart-shape-stroke10px.gif',
-	player: 'http://i.imgur.com/j98Fneu.png',
-	enemy: 'https://rets96creativedevelopment.files.wordpress.com/2015/01/pixel-art-fire-monster.jpg',
-	boss: 'https://us.v-cdn.net/5022341/uploads/editor/79/9e4n7bafgb0c.png',
-	wall: 'http://orig13.deviantart.net/80e0/f/2008/300/d/b/dbed9fe8a05a10f962070b29c930cfe1.png',
-	void: '',
-	weapon: 'http://www.rw-designer.com/cursor-view/46892-48.png',
-	exit: 'http://piq.codeus.net/static/media/userpics/piq_275529_400x400.png',
-	floor: 'http://piq.codeus.net/static/media/userpics/piq_217058_400x400.png'
+	health: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAbUlEQVQ4T2N8/PjxfwYKAOMwNeCtmxs4VIR37QLT6HzkIMMIA5hibOF66udPBs+DB1GksBogKC3N8P7pUwwziDYAV6zSxwDkQEN2CTbbQfI4ExJyYOLSjNcAkOR2e3uwI9BDHm80kpothkFeAAA+kmqRxFkh/gAAAABJRU5ErkJggg==',
+	player: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAuklEQVQ4T2N8/PjxfwYKACM+A3x8olGM3rJlKYZVBA2Ya34drkm89hzpBoB0gAxJPqnJQLIL7OxcwDamqLxhmHNHhOHQoT2EXQDSxMcnjjNY0V2BEgagQPv06SX1DYCFAcxZyK6AuwBkO0gC2QthYlcZ3BWZ4N4BBSQIEG0ATCdRLgAphoU6eiCCXLLqlTbYPFAYIccGRkKiKBaQXYErHtHTAtakDAtQZEOwiYHkaWMAKBzQnYpNDOQCAFXvkpH63s1+AAAAAElFTkSuQmCC',
+	enemy: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAqElEQVQ4T2N8/PjxfwYKAOOoAQy0DYNLbdcZTBXN4HH0M/IzRnxhuACkCQSQNSLrQjcEqwG4NMMMQjYExQB0J4uVCTC86voAdwAyH2YI3AB0p4MUHxUUZOD/e5NBrIaNAZ0PMhVkCIoB6E5/1fILbDvIABBA58MNIBRwuLIK0QbcblfEMEO18j5YjLHBvfm/qZI53qgDGSAaeQFuyOvlBgwkG4DuBJgBAD7mf8IwKdp5AAAAAElFTkSuQmCC',
+	boss: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAl0lEQVQ4T2N8/PjxfwYcYNeWLQxJGRkMT548waWEgXHwGiArKwt39uPHj0n3AsiA/3JyYI2Mjx4x4DIEaxjAbP///z8Dg7w8aQaANINsA9Fzp09nUKquZnB89w7sEmyuwHABsgEgTSBD3Hx8SAsD5ADEZTPMRJzpgCqxALOF7GgcOAPQAxE5CtC9gzMhYfM3LIqRDaTYAADxiIyRtPF7AgAAAABJRU5ErkJggg==',
+	wall: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAbklEQVQ4T2PU1dL6z0ABYOydNhVuwIIpUxkScrKxGodLjtEjKBBuwNMbNxmkNdSxGoBLjpGqXoBZjc8rIDXI8ihegBmAzysgNcjylBtA1TAgxe8w7xIdjeh+H0QGUDUQiU1IyImJrHSAHKAU5wUA44th05V3fYYAAAAASUVORK5CYII=',
+	void: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2NkYGD4z0ABYBw1gGE0DBhGw4BhWIQBAE5OEAELnjVHAAAAAElFTkSuQmCC',
+	weapon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAg0lEQVQ4T2N8/PjxfwYKACNNDbDbJsJwyOsNXvfhdEFtdTXDQeuZDPZH0xmaW1txGoLVgGXz5jFcv3sXbsCDe/cYFi9fjtWQUQMYGGgbBockYxjsni9hICkWOlI9sUbXvdffGGZtOIghhzMhwQzCpRFmEu0MANmQFmCP1dnI/qA4NwIAnCuskTXxa78AAAAASUVORK5CYII=',
+	exit: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAvUlEQVQ4T2N8/PjxfwYkkBWswzBt7RVkITgbmxwj1QyQlZUF22SswsNw9s4XrC7wNeNn2HzqI1ju8ePHYBrsAphmmAEgWkqIGashMANghmAYgGwLugnociBXkGQAuvdwGvDs3V8ML8DEBtYLRIUByJ8wAIsJkPNhADmKMcKAn4+PQUXsH8OdV0xYoxAm9/HTJ3hagKdEUFogxQCUhAQyDpaYQIbgA8i2w1MiTAMhQ9A1YxiA12ockhi5kVRDAOUGspHTz1ZbAAAAAElFTkSuQmCC',
+	floor: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2N8/PjxfwYKAOOoAQyjYcAwGgYMwyIMANpLOpFl+lbzAAAAAElFTkSuQmCC'
 };
 
 export default tileImg;
